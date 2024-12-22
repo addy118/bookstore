@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/books", bookRouter);
 app.use("/genres", genreRouter);
-app.use("/", getApp);
+app.get("/", getApp);
 
 app.use(routeError);
 app.use(appError);

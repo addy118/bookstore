@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/node.svg" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/form.css" />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <form action="/books/<%= bookId %>/update" method="POST">
+      <fieldset>
+        <label for="title"
+          >Title:
+          <input type="text" name="title" id="title" />
+        </label>
+        <label for="author"
+          >Author:
+          <input type="text" name="author" id="author" />
+        </label>
+        <label for="price"
+          >Price:
+          <input type="text" name="price" id="price" />
+        </label>
+        <label for="stock"
+          >Stock:
+          <input type="text" name="stock" id="stock" />
+        </label>
+        <button type="submit">Submit</button>
+      </fieldset>
+    </form>
+    <a href="/books"><button>Back to books</button></a>
+  </body>
+</html>
