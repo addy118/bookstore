@@ -1,4 +1,5 @@
 const { body, validationResult } = require("express-validator");
+const { fetchBooks } = require("../db/bookQueries");
 
 const validateBook = [
   body("title")
@@ -23,8 +24,9 @@ const validateBook = [
     .withMessage("Stock should contain only numbers"),
 ];
 
-exports.getBooks = (req, res) => {
-  res.send("books route is working!");
+exports.getBooks = async (req, res) => {
+  const books = await fetchBooks();
+  res.send(books);
 };
 
 exports.getBookId = (req, res) => {

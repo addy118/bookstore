@@ -1,4 +1,5 @@
 const { body, validationResult } = require("express-validator");
+const { fetchGenres } = require("../db/genreQueries");
 
 const validateGenre = [
   body("name")
@@ -9,8 +10,9 @@ const validateGenre = [
     .withMessage("Genre name must be between 2 and 16"),
 ];
 
-exports.getGenres = (req, res) => {
-  res.send("genres route is working!");
+exports.getGenres = async (req, res) => {
+  const genres = await fetchGenres();
+  res.send(genres);
 };
 
 exports.getGenreId = (req, res) => {
