@@ -1,3 +1,14 @@
+const { body, validationResult } = require("express-validator");
+
+const validateGenre = [
+  body("name")
+    .trim()
+    .isAlpha()
+    .withMessage("Genre name should only contain letters")
+    .isLength({ min: 2, max: 16 })
+    .withMessage("Genre name must be between 2 and 16"),
+];
+
 exports.getGenres = (req, res) => {
   res.send("genres route is working!");
 };
@@ -8,23 +19,55 @@ exports.getGenreId = (req, res) => {
 };
 
 exports.getNewGenre = (req, res) => {
-  res.render("newGenre", { title: "New Genre" });
+  res.render("newGenre", {
+    title: "New Genre",
+  });
 };
 
-exports.postNewGenre = (req, res) => {
-  const { name } = req.body;
-  res.send(name);
-};
+exports.postNewGenre = [
+  validateGenre,
+  (req, res) => {
+    // validation error
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("newGenre", {
+        title: "New Genre",
+        errors: errors.array(),
+      });
+    }
+
+    // route handler
+    const { name } = req.body;
+    console.log(name);
+    res.redirect("/genres");
+  },
+];
 
 exports.getUpdateGenre = (req, res) => {
-  const { genreId } = req.body;
-  res.render("updateGenre", { title: "Update Genre", genreId });
+  const { genreId } = req.params;
+  res.render("updateGenre", { title: "Update Genre", genreId: genreId });
 };
 
-exports.postUpdateGenre = (req, res) => {
-  const { name } = req.body;
-  res.send(name);
-};
+exports.postUpdateGenre = [
+  validateGenre,
+  (req, res) => {
+    const { genreId } = req.params;
+
+    // validation error
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).render("updateGenre", {
+        title: "Update Genre",
+        genreId: genreId,
+        errors: errors.array(),
+      });
+    }
+
+    // route handler
+    const { name } = req.body;
+    res.send(name);
+  },
+];
 
 exports.getDeleteGenre = (req, res) => {
   res.send("Are you sure you wanna delete this genre?");
