@@ -37,11 +37,6 @@ input {
   font-size: 14px;
 }
 
-/* input[type="text"] {
-  padding: 4px 8px;
-  font-size: 14px;
-} */
-
 select {
   width: fit-content;
   padding: 4px 8px;
