@@ -11,7 +11,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json())
+app.use(express.json());
 
 app.use("/books", bookRouter);
 app.use("/genres", genreRouter);
@@ -21,4 +21,6 @@ app.use(routeError);
 app.use(appError);
 
 const { PORT = 8080 } = process.env;
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+app.listen(PORT, "0.0.0.0", () =>
+  console.log(`Server listening on port ${PORT}`)
+);
