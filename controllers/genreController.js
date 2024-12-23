@@ -83,8 +83,10 @@ exports.postUpdateGenre = [
   },
 ];
 
-exports.getDeleteGenre = (req, res) => {
-  res.send("Are you sure you wanna delete this genre?");
+exports.getDeleteGenre = async (req, res) => {
+  const { genreId } = req.params;
+  const books = await fetchGenreBooksById(genreId);
+  res.render("deleteGenre", { title: "Delete Genre", books });
 };
 
 exports.genreError = (err, req, res, next) => {
