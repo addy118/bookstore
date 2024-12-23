@@ -2,7 +2,7 @@ const { fetchGenreIdByName } = require("./genreQueries");
 const pool = require("./pool");
 
 exports.insertBook = async (title, author, genre, price, stock) => {
-  const genre_id = await fetchGenreIdByName();
+  const genre_id = await fetchGenreIdByName(genre);
   await pool.query(
     "INSERT INTO books (genre_id, title, author, price, stock) VALUES (($1), ($2), ($3), ($4), ($5));",
     [genre_id, title, author, price, stock]
@@ -11,7 +11,7 @@ exports.insertBook = async (title, author, genre, price, stock) => {
 
 exports.fetchBooks = async () => {
   const { rows } = await pool.query(
-    "SELECT b.book_id, b.title, b.author, g.name genre, b.price, b.stock FROM books b JOIN genres g ON b.genre_id = g.genre_id;"
+    "SELECT b.book_id, b.title, b.author, g.name genre, b.price, b.stock FROM books b JOIN genres g ON b.genre_id = g.genre_id ORDER BY b.title;"
   );
   return rows;
 };

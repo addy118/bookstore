@@ -7,6 +7,7 @@ const {
   updateBookGenreById,
   updateBookPriceById,
   updateBookStockById,
+  insertBook,
 } = require("../db/bookQueries");
 const { fetchGenres, fetchGenreIdByName } = require("../db/genreQueries");
 
@@ -59,19 +60,23 @@ exports.getNewBook = async (req, res) => {
 
 exports.postNewBook = [
   validateBook,
-  (req, res) => {
+  async (req, res) => {
     // validation error
     const errors = validationResult(req);
+    const genres = await fetchGenres();
     if (!errors.isEmpty()) {
       return res.status(400).render("newBook", {
         title: "New Book",
+        genres,
         errors: errors.array(),
       });
     }
 
     // route handler
-    const { title, author, price, stock } = req.body;
-    console.log(title, author, price, stock);
+    const { title, author, genre, price, stock } = req.body;
+    // const genre_id = await fetchGenreIdByName(genre);
+    // console.log(title, author, genre_id, price, stock);
+    await insertBook(title, author, genre, price, stock);
     res.redirect("/books");
   },
 ];
