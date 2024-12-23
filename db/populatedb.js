@@ -2,35 +2,27 @@ const { Client } = require("pg");
 require("dotenv").config({ path: "../.env" });
 
 const SQL = `
-INSERT INTO genres (name) VALUES 
-  ('Science Fiction'),
-  ('Fantasy'),
-  ('Mystery'),
-  ('Romance'),
-  ('Historical Fiction');
-
-INSERT INTO books (genre_id, title, author, price, stock) VALUES 
-  (1, 'Dune', 'Frank Herbert', 1499, 50),
-  (1, 'The Left Hand of Darkness', 'Ursula K. Le Guin', 1299, 30),
-  (1, 'Neuromancer', 'William Gibson', 1599, 40),
-  (1, 'Foundation', 'Isaac Asimov', 1699, 60),
-  (1, 'The Hitchhikers Guide to the Galaxy', 'Douglas Adams', 1299, 80),
-  (2, 'The Hobbit', 'J.R.R. Tolkien', 999, 100),
-  (2, 'Harry Potter and the Sorcerers Stone', 'J.K. Rowling', 799, 200),
-  (2, 'A Game of Thrones', 'George R.R. Martin', 1399, 120),
-  (2, 'The Name of the Wind', 'Patrick Rothfuss', 1199, 150),
-  (2, 'Mistborn: The Final Empire', 'Brandon Sanderson', 1499, 200),
-  (3, 'The Girl with the Dragon Tattoo', 'Stieg Larsson', 1299, 80),
-  (3, 'Gone Girl', 'Gillian Flynn', 899, 120),
-  (3, 'The Silent Patient', 'Alex Michaelides', 1399, 60),
-  (3, 'Big Little Lies', 'Liane Moriarty', 1099, 90),
-  (3, 'Sharp Objects', 'Gillian Flynn', 1199, 70),
-  (4, 'Pride and Prejudice', 'Jane Austen', 1099, 60),
-  (4, 'The Fault in Our Stars', 'John Green', 1299, 150),
-  (4, 'Me Before You', 'Jojo Moyes', 899, 130),
-  (4, 'The Notebook', 'Nicholas Sparks', 999, 110),
-  (5, 'The Book Thief', 'Markus Zusak', 1399, 75),
-  (5, 'All the Light We Cannot See', 'Anthony Doerr', 1499, 40);
+INSERT INTO books (genre_id, title, author, price, stock) VALUES
+(8, 'IT', 'Stephen King', 1699, 50),
+(8, 'Dracula', 'Bram Stoker', 1199, 60),
+(8, 'The Haunting of Hill House', 'Shirley Jackson', 1299, 70),
+(8, 'Pet Sematary', 'Stephen King', 1499, 40),
+(9, 'The Girl on the Train', 'Paula Hawkins', 1399, 80),
+(9, 'The Da Vinci Code', 'Dan Brown', 1499, 90),
+(9, 'Gone Tomorrow', 'Lee Child', 1299, 100),
+(9, 'Before I Go to Sleep', 'S.J. Watson', 1199, 50),
+(10, 'All the Light We Cannot See', 'Anthony Doerr', 1699, 60),
+(10, 'The Book Thief', 'Markus Zusak', 1299, 70),
+(10, 'Pillars of the Earth', 'Ken Follett', 1999, 40),
+(10, 'Wolf Hall', 'Hilary Mantel', 1599, 50),
+(11, 'The Diary of a Young Girl', 'Anne Frank', 999, 120),
+(11, 'Becoming', 'Michelle Obama', 1699, 80),
+(11, 'Steve Jobs', 'Walter Isaacson', 1499, 60),
+(11, 'Educated', 'Tara Westover', 1299, 70),
+(12, 'The Power of Habit', 'Charles Duhigg', 1199, 90),
+(12, 'Atomic Habits', 'James Clear', 1499, 150),
+(12, 'How to Win Friends and Influence People', 'Dale Carnegie', 999, 200),
+(12, 'The Subtle Art of Not Giving a F*ck', 'Mark Manson', 1299, 110);
 `;
 
 const { PGSTRING } = process.env;

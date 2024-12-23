@@ -5,7 +5,9 @@ exports.insertGenre = async (name) => {
 };
 
 exports.fetchGenres = async () => {
-  const { rows } = await pool.query("SELECT * FROM genres ORDER BY genre_id;");
+  const { rows } = await pool.query(
+    "SELECT g.genre_id, g.name, COUNT(b.book_id) books_count FROM books b join genres g ON b.genre_id = g.genre_id GROUP BY g.name, g.genre_id ORDER BY g.name;"
+  );
   return rows;
 };
 
@@ -60,3 +62,5 @@ exports.deleteGenreById = async (genreId) => {
 // UPDATE genres SET name = ($1) WHERE genre_id = ($2);
 
 // DELETE FROM genres WHERE genre_id = ($1);    // CAUTION DELETES ALL THE BOOKS OF THIS GENRE
+
+// SELECT g.genre_id, g.name, COUNT(b.book_id) books_count FROM books b join genres g ON b.genre_id = g.genre_id GROUP BY g.name, g.genre_id ORDER BY g.name;

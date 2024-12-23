@@ -18,7 +18,8 @@
       <% genres.forEach(genre => { %>
       <a href="/genres/<%= genre.genre_id %>/books">
         <div class="grid-item">
-          <label> <div class="heading"><%= genre.name %></div></label>
+          <div class="heading"><%= genre.name %></div>
+          <div><%= genre.books_count %> Total Books</div>
         </div>
       </a>
       <% }) %>
