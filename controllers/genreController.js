@@ -4,6 +4,7 @@ const {
   updateGenreNameById,
   insertGenre,
   fetchGenreBooksById,
+  deleteGenreById,
 } = require("../db/genreQueries");
 
 const validateGenre = [
@@ -86,7 +87,14 @@ exports.postUpdateGenre = [
 exports.getDeleteGenre = async (req, res) => {
   const { genreId } = req.params;
   const books = await fetchGenreBooksById(genreId);
-  res.render("deleteGenre", { title: "Delete Genre", books });
+  res.render("deleteGenre", { title: "Delete Genre", books, genreId });
+};
+
+exports.postDeleteGenre = async (req, res) => {
+  const { genreId } = req.params;
+  await deleteGenreById(genreId);
+  console.log("deleted genre!");
+  res.redirect("/genres");
 };
 
 exports.genreError = (err, req, res, next) => {

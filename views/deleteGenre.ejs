@@ -26,6 +26,8 @@
       <% }) %>
     </div>
     <% } %>
-    <button>Delete</button>
+    <form action="/genres/<%= genreId %>/delete" method="POST">
+      <button>Delete</button>
+    </form>
   </body>
 </html>
