@@ -1,5 +1,8 @@
-exports.getApp = (req, res) => {
-  res.render("home", { title: "Home" });
+const { fetchGenres } = require("../db/genreQueries");
+
+exports.getApp = async (req, res) => {
+  const genres = await fetchGenres();
+  res.render("home", { title: "Home", genres });
 };
 
 exports.routeError = (req, res) => {

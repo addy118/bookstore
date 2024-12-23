@@ -9,11 +9,14 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <h3>Welcome to home page!</h3>
     <div class="grid">
-      <% genres.forEach(genre => { %>
+      <% books.forEach(book => { %>
       <div class="grid-item">
-        <label> <div class="heading"><%= genre.name %></div></label>
+        <label> <div class="heading"><%= book.title %></div></label>
+        <label> <div><%= book.author %></div></label>
+        <label> <div><%= book.genre %></div></label>
+        <label> <div><%= book.price %></div></label>
+        <label> <div><%= book.stock %> left</div></label>
       </div>
       <% }) %>
     </div>

@@ -26,7 +26,7 @@ const validateBook = [
 
 exports.getBooks = async (req, res) => {
   const books = await fetchBooks();
-  res.send(books);
+  res.render("books", { title: "Books", books });
 };
 
 exports.getBookId = (req, res) => {

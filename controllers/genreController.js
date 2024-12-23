@@ -1,23 +1,34 @@
 const { body, validationResult } = require("express-validator");
-const { fetchGenres } = require("../db/genreQueries");
+const {
+  fetchGenres,
+  updateGenreNameById,
+  insertGenre,
+  fetchGenreBooksById,
+} = require("../db/genreQueries");
 
 const validateGenre = [
   body("name")
     .trim()
-    .isAlpha()
-    .withMessage("Genre name should only contain letters")
-    .isLength({ min: 2, max: 16 })
+    .matches(/^[A-Za-z]+(?:[-\s][A-Za-z]+)*$/)
+    .withMessage(
+      "Genre name should only contain letters, hyphens, and single spaces"
+    )
+    .isLength({ min: 2, max: 30 })
     .withMessage("Genre name must be between 2 and 16"),
 ];
 
 exports.getGenres = async (req, res) => {
   const genres = await fetchGenres();
-  res.send(genres);
+  res.render("genres", {
+    title: "Genres",
+    genres,
+  });
 };
 
-exports.getGenreId = (req, res) => {
+exports.getGenreBooks = async (req, res) => {
   const { genreId } = req.params;
-  res.send("genre id: " + genreId);
+  const books = await fetchGenreBooksById(genreId);
+  res.render("books", { title: "Genre Books", books });
 };
 
 exports.getNewGenre = (req, res) => {
@@ -28,7 +39,7 @@ exports.getNewGenre = (req, res) => {
 
 exports.postNewGenre = [
   validateGenre,
-  (req, res) => {
+  async (req, res) => {
     // validation error
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -40,7 +51,7 @@ exports.postNewGenre = [
 
     // route handler
     const { name } = req.body;
-    console.log(name);
+    await insertGenre(name);
     res.redirect("/genres");
   },
 ];
@@ -52,13 +63,13 @@ exports.getUpdateGenre = (req, res) => {
 
 exports.postUpdateGenre = [
   validateGenre,
-  (req, res) => {
+  async (req, res) => {
     const { genreId } = req.params;
 
     // validation error
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).render("updateGenre", {
+      return res.status(400).render("updateGenre", {
         title: "Update Genre",
         genreId: genreId,
         errors: errors.array(),
@@ -67,7 +78,8 @@ exports.postUpdateGenre = [
 
     // route handler
     const { name } = req.body;
-    res.send(name);
+    await updateGenreNameById(name, genreId);
+    res.redirect("/genres");
   },
 ];
 
