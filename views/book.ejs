@@ -31,5 +31,12 @@
         <div><%= book.stock %> left</div></label
       >
     </div>
+    <nav>
+      <a href="/books/<%= book.book_id %>/update">
+        <button>Edit</button>
+      </a>
+      <a href="/books"><button>Go Back</button></a>
+      <a href="/books/<%= book.book_id %>/delete"><button>Delete</button></a>
+    </nav>
   </body>
 </html>

@@ -5,6 +5,7 @@ const {
   insertGenre,
   fetchGenreBooksById,
   deleteGenreById,
+  fetchGenreNameById,
 } = require("../db/genreQueries");
 
 const validateGenre = [
@@ -28,8 +29,9 @@ exports.getGenres = async (req, res) => {
 
 exports.getGenreBooks = async (req, res) => {
   const { genreId } = req.params;
+  const genreName = await fetchGenreNameById(genreId);
   const books = await fetchGenreBooksById(genreId);
-  res.render("books", { title: "Genre Books", books });
+  res.render("genreBooks", { title: "Genre Books", books, genreName, genreId });
 };
 
 exports.getNewGenre = (req, res) => {

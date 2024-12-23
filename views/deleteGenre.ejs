@@ -26,8 +26,11 @@
       <% }) %>
     </div>
     <% } %>
-    <form action="/genres/<%= genreId %>/delete" method="POST">
-      <button>Delete</button>
-    </form>
+    <nav>
+      <form action="/genres/<%= genreId %>/delete" method="POST">
+        <button>Delete</button>
+      </form>
+      <a href="/genres/<%= genreId %>/books"><button>Go Back</button></a>
+    </nav>
   </body>
 </html>

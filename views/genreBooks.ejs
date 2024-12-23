@@ -14,6 +14,11 @@
       <a href="/books"><button>All Books</button></a>
       <a href="/genres"><button>All Genres</button></a>
     </nav>
+    <nav>
+      <h3><%= genreName %></h3>
+      <a href="/genres/<%= genreId %>/update"><button>Edit</button></a>
+      <a href="/genres/<%= genreId %>/delete"><button>Delete</button></a>
+    </nav>
     <div class="grid">
       <% books.forEach(book => { %>
       <a href="/books/<%= book.book_id %>/view">

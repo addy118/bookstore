@@ -19,8 +19,11 @@
       <label> <div><%= book.stock %> left</div></label>
     </div>
 
-    <form action="/books/<%= book.book_id %>/delete" method="POST">
-      <button type="submit">Delete</button>
-    </form>
+    <nav>
+      <form action="/books/<%= book.book_id %>/delete" method="POST">
+        <button type="submit">Delete</button>
+      </form>
+      <a href="/books/<%= book.book_id %>/view"><button>Go Back</button></a>
+    </nav>
   </body>
 </html>
