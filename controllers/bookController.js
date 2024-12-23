@@ -8,6 +8,7 @@ const {
   updateBookPriceById,
   updateBookStockById,
   insertBook,
+  deleteBookById,
 } = require("../db/bookQueries");
 const { fetchGenres, fetchGenreIdByName } = require("../db/genreQueries");
 
@@ -85,6 +86,8 @@ exports.getUpdateBook = async (req, res) => {
   const { bookId } = req.params;
   const genres = await fetchGenres();
   const book = await fetchBookById(bookId);
+  console.log(book);
+  if (!book) return res.send("No book found!");
   const old_genre = book.genre;
   res.render("updateBook", { title: "Update Book", book, genres, old_genre });
 };
@@ -122,8 +125,20 @@ exports.postUpdateBook = [
   },
 ];
 
-exports.getDeleteBook = (req, res) => {
-  res.send("Are you sure you wanna delete the book?");
+exports.getDeleteBook = async (req, res) => {
+  const { bookId } = req.params;
+  const book = await fetchBookById(bookId);
+  res.render("deleteBook", {
+    title: "Delete Book",
+    book,
+  });
+};
+
+exports.postDeleteBook = async (req, res) => {
+  const { bookId } = req.params;
+  await deleteBookById(bookId);
+  console.log("deleted!");
+  res.redirect("/");
 };
 
 exports.bookError = (err, req, res, next) => {

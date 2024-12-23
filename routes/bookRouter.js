@@ -8,6 +8,7 @@ const {
   getUpdateBook,
   postUpdateBook,
   getDeleteBook,
+  postDeleteBook,
 } = require("../controllers/bookController");
 const bookRouter = Router();
 
@@ -16,6 +17,7 @@ bookRouter.post("/new", postNewBook);
 bookRouter.get("/:bookId/update", getUpdateBook);
 bookRouter.post("/:bookId/update", postUpdateBook);
 bookRouter.get("/:bookId/delete", getDeleteBook);
+bookRouter.post("/:bookId/delete", postDeleteBook);
 bookRouter.get("/:bookId/view", getBookId);
 bookRouter.get("/", getBooks);
 
