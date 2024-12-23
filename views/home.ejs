@@ -10,11 +10,17 @@
   <body>
     <h1><%= title %></h1>
     <h3>Welcome to home page!</h3>
+    <nav>
+      <a href="/books"><button>All Books</button></a>
+      <a href="/genres"><button>All Genres</button></a>
+    </nav>
     <div class="grid">
       <% genres.forEach(genre => { %>
-      <div class="grid-item">
-        <label> <div class="heading"><%= genre.name %></div></label>
-      </div>
+      <a href="/genres/<%= genre.genre_id %>/books">
+        <div class="grid-item">
+          <div class="heading"><%= genre.name %></div>
+        </div>
+      </a>
       <% }) %>
     </div>
   </body>

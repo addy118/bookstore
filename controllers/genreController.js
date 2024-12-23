@@ -93,7 +93,7 @@ exports.getDeleteGenre = async (req, res) => {
 exports.postDeleteGenre = async (req, res) => {
   const { genreId } = req.params;
   await deleteGenreById(genreId);
-  console.log("deleted genre!");
+  // console.log("deleted genre!");
   res.redirect("/genres");
 };
 

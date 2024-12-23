@@ -137,7 +137,7 @@ exports.getDeleteBook = async (req, res) => {
 exports.postDeleteBook = async (req, res) => {
   const { bookId } = req.params;
   await deleteBookById(bookId);
-  console.log("deleted!");
+  // console.log("deleted book!");
   res.redirect("/");
 };
 

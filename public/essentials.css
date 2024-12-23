@@ -79,3 +79,10 @@ label div {
 body > button {
   width: inherit;
 }
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
