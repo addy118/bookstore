@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/node.svg" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/essentials.css" />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <div class="grid-item">
+      <label
+        ><strong>Title: </strong>
+        <div class="heading"><%= book.title %></div></label
+      >
+      <label
+        ><strong>Author: </strong>
+        <div><%= book.author %></div></label
+      >
+      <label
+        ><strong>Genre: </strong>
+        <div><%= book.genre %></div></label
+      >
+      <label
+        ><strong>Price: </strong>
+        <div><%= book.price %></div></label
+      >
+      <label
+        ><strong>Stock: </strong>
+        <div><%= book.stock %> left</div></label
+      >
+    </div>
+  </body>
+</html>

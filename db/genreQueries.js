@@ -10,19 +10,18 @@ exports.fetchGenres = async () => {
 };
 
 exports.fetchGenreIdByName = async (name) => {
-  const { rows } = pool.query(
-    "SELECT name genre_name FROM genres WHERE genre_id = ($1);",
-    [name]
-  );
-  return rows[0];
+  const { rows } = await pool.query("SELECT * FROM genres WHERE name = ($1);", [
+    name,
+  ]);
+  return rows[0].genre_id;
 };
 
 exports.fetchGenreNameById = async (genreId) => {
   const { rows } = await pool.query(
-    "SELECT name genre_name FROM genres WHERE genre_id = ($1);",
+    "SELECT name FROM genres WHERE genre_id = ($1);",
     [genreId]
   );
-  return rows[0];
+  return rows[0].name;
 };
 
 exports.fetchGenreBooksById = async (genreId) => {

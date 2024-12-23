@@ -21,7 +21,7 @@ exports.fetchBookById = async (bookId) => {
     "SELECT b.book_id, b.title, b.author, g.name genre, b.price, b.stock FROM books b JOIN genres g ON b.genre_id = g.genre_id WHERE b.book_id = ($1);",
     [bookId]
   );
-  return rows;
+  return rows[0];
 };
 
 exports.updateBookTitleById = async (value, bookId) => {
@@ -39,7 +39,7 @@ exports.updateBookAuthorById = async (value, bookId) => {
 };
 
 exports.updateBookGenreById = async (value, bookId) => {
-  await pool.query("UPDATE books SET genre = ($1) WHERE book_id = ($2);", [
+  await pool.query("UPDATE books SET genre_id = ($1) WHERE book_id = ($2);", [
     value,
     bookId,
   ]);

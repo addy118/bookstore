@@ -1,19 +1,32 @@
 const { body, validationResult } = require("express-validator");
-const { fetchBooks } = require("../db/bookQueries");
+const {
+  fetchBooks,
+  fetchBookById,
+  updateBookAuthorById,
+  updateBookTitleById,
+  updateBookGenreById,
+  updateBookPriceById,
+  updateBookStockById,
+} = require("../db/bookQueries");
+const { fetchGenres, fetchGenreIdByName } = require("../db/genreQueries");
 
 const validateBook = [
   body("title")
     .trim()
-    .isAlpha()
-    .withMessage("Title should be alphabetic")
-    .isLength({ min: 2, max: 30 })
+    .matches(/^[A-Za-z]+(?:[-\s][A-Za-z]+)*$/)
+    .withMessage(
+      "Title should only contain letters, hyphens, and single spaces"
+    )
+    .isLength({ min: 2, max: 80 })
     .withMessage("Title should be within 2 and 30 characters"),
   body("author")
     .trim()
-    .isAlpha()
-    .withMessage("Title should only contain letters")
-    .isLength({ min: 2, max: 15 })
-    .withMessage("Title should be within 2 and 15 characters"),
+    .matches(/^[A-Za-z]+(?:[-\s][A-Za-z]+)*$/)
+    .withMessage(
+      "Author should only contain letters, hyphens, and single spaces"
+    )
+    .isLength({ min: 2, max: 30 })
+    .withMessage("Author should be within 2 and 15 characters"),
   body("price")
     .trim()
     .isInt({ min: 1, allow_leading_zeroes: false })
@@ -29,13 +42,19 @@ exports.getBooks = async (req, res) => {
   res.render("books", { title: "Books", books });
 };
 
-exports.getBookId = (req, res) => {
+exports.getBookId = async (req, res) => {
   const { bookId } = req.params;
-  res.send("book id: " + bookId);
+  const book = await fetchBookById(bookId);
+  console.log(book);
+  res.render("book", {
+    title: "View Book",
+    book,
+  });
 };
 
-exports.getNewBook = (req, res) => {
-  res.render("newBook", { title: "New Book" });
+exports.getNewBook = async (req, res) => {
+  const genres = await fetchGenres();
+  res.render("newBook", { title: "New Book", genres });
 };
 
 exports.postNewBook = [
@@ -57,29 +76,43 @@ exports.postNewBook = [
   },
 ];
 
-exports.getUpdateBook = (req, res) => {
+exports.getUpdateBook = async (req, res) => {
   const { bookId } = req.params;
-  res.render("updateBook", { title: "Update Book", bookId: bookId });
+  const genres = await fetchGenres();
+  const book = await fetchBookById(bookId);
+  const old_genre = book.genre;
+  res.render("updateBook", { title: "Update Book", book, genres, old_genre });
 };
 
 exports.postUpdateBook = [
   validateBook,
-  (req, res) => {
+  async (req, res) => {
     const { bookId } = req.params;
+    const genres = await fetchGenres();
+    const book = await fetchBookById(bookId);
+    const old_genre = book.genre;
 
     // validation error
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).render("updateBook", {
         title: "Update Book",
-        bookId: bookId,
+        book,
+        genres,
+        old_genre,
         errors: errors.array(),
       });
     }
 
     // route handler
-    const { title, author, price, stock } = req.body;
-    console.log(title, author, price, stock);
+    const { title, genre, author, price, stock } = req.body;
+    const genre_id = await fetchGenreIdByName(genre);
+    // console.log(title, genre_id, author, price, stock);
+    await updateBookTitleById(title, bookId);
+    await updateBookAuthorById(author, bookId);
+    await updateBookGenreById(genre_id, bookId);
+    await updateBookPriceById(price, bookId);
+    await updateBookStockById(stock, bookId);
     res.redirect("/books");
   },
 ];

@@ -11,23 +11,59 @@
   <body>
     <h1><%= title %></h1>
     <%- include('partials/errors.ejs') %>
-    <form action="/books/<%= bookId %>/update" method="POST">
+    <form action="/books/<%= book.book_id %>/update" method="POST">
       <fieldset>
         <label for="title"
           >Title:
-          <input type="text" name="title" id="title" />
+          <input
+            type="text"
+            name="title"
+            id="title"
+            value="<%= book.title %>"
+          />
         </label>
         <label for="author"
           >Author:
-          <input type="text" name="author" id="author" />
+          <input
+            type="text"
+            name="author"
+            id="author"
+            value="<%= book.author %>"
+          />
         </label>
+        <label for="genre"
+          >Select a genre:
+          <select name="genre" id="genre">
+            <option value="">Select</option>
+            <% genres.forEach(genre => { %> <% if (genre.name === old_genre) {
+            %>
+            <option value="<%= genre.name %>" selected>
+              <%= old_genre %>
+            </option>
+            <% } else { %>
+            <option value="<%= genre.name %>">
+              <%= genre.name %>
+            </option>
+            <% } %> <% }) %>
+          </select></label
+        >
         <label for="price"
           >Price:
-          <input type="text" name="price" id="price" />
+          <input
+            type="text"
+            name="price"
+            id="price"
+            value="<%= book.price %>"
+          />
         </label>
         <label for="stock"
           >Stock:
-          <input type="text" name="stock" id="stock" />
+          <input
+            type="text"
+            name="stock"
+            id="stock"
+            value="<%= book.stock %>"
+          />
         </label>
         <button type="submit">Submit</button>
       </fieldset>
