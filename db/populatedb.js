@@ -25,13 +25,13 @@ INSERT INTO books (genre_id, title, author, price, stock) VALUES
 (12, 'The Subtle Art of Not Giving a F*ck', 'Mark Manson', 1299, 110);
 `;
 
-const { PGSTRING } = process.env;
+const DATABASE_URL = process.env.DATABASE_URL;
 
 async function main() {
   console.log("Seeding table...");
 
   const client = new Client({
-    connectionString: PGSTRING,
+    connectionString: DATABASE_URL,
   });
 
   try {
