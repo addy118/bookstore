@@ -20,7 +20,7 @@ app.get("/", getApp);
 app.use(routeError);
 app.use(appError);
 
-const { PORT = 8080 } = process.env;
-app.listen(PORT, "0.0.0.0", () =>
-  console.log(`Server listening on port ${PORT}`)
+const port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", () =>
+  console.log(`Server listening on port ${port}`)
 );
