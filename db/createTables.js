@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS genres (
 //   author VARCHAR(255) NOT NULL,
 //   price MONEY NOT NULL,
 //   stock INTEGER NOT NULL,
-  
+// 
 //   CONSTRAINT fk_genre FOREIGN KEY (genre_id) REFERENCES genres (genre_id)
 //   ON DELETE CASCADE 
 //   ON UPDATE CASCADE 
